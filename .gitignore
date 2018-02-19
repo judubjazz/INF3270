@@ -4,5 +4,5 @@
 
 
 # exclu les suivants.
-!Devoir/
+!/Devoir
 !.gitignore
