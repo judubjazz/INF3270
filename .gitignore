@@ -1,0 +1,8 @@
+# inclu tous les validation du projet
+
+/*
+
+
+# exclu les suivants.
+!tp4/
+!.gitignore

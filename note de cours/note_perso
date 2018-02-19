@@ -1,0 +1,77 @@
+-Dans chaque paquets, il y a l adresse source et l adresse de destination
+-un paquet peut prendre different chemin
+
+TCP :service orienté connection
+UDP : n'est pas orienté connection
+
+HTTP non persistant : la connection se ferme tous suite après chaque requete
+HTTP persistant : ne se ferme pas tout suite après. 
+
+checksum: divise le payload, les port et la taille en 16 bit et fait la somme, ensuite il garde le complément
+
+difference entre Goback et repitition selectives : gestion des erreurs
+repetition selective ameliore les performances de transmition à cause des timers. (pas dans TCP)
+
+TCP : aucun acquiessement negatif
+
+TCP numero de sequence :
+    ack cumulatif : si il ya 1800 ack positif alors le numero d aquitement est 1801
+                    j ai recu tout les octet avant le numero 1801
+                    different que goback N car go backN sont des pacquet 
+                    ici ce sont des octets
+
+    les numero de sequence sont differents entre les machines A et B
+
+time out trop court : n'attend pas suffisament pour attendre l acquitement 
+
+exemple calcul moyenne
+
+    EstimatedRtt = 10 ms
+    SampleRtt = 20 ms
+
+    (1-0.125) * 10 + 0.125 * 20 = 11.25 ms
+
+
+avec dev = 2
+
+0.75 * 2 + 0.25 * (20 -10) = 4ms
+
+
+******
+
+tcp evenement chez l emetteur
+
+le numero de seuqence est un pointeur vers le premier octet des donnees dans le segment
+
+
+acquietement duplique : lorsqu un numero de sequence est attendu par le recepeteutr (ex: 100) mais recoit un segmenent hors sequence (ex:120), alors il renvoit l aquitemenet deja recu
+ (ex :100)
+
+Controle de flux TCP :
+    RvcBuffer fixe par les options des sockets typiquement 4096 octets
+    Plusieurs Os auto-ajusts
+
+TCP fermer une connexion
+    le client et le severur deicnede de ffermer la connexion chacnun de son cote
+        envoyer un segment tcp abec ;e bit FIn =1
+
+    repondre a un fin recun avec un ACK
+        a la reception de FIN , ACK peut erree combine avec un FIN
+
+Causes et couts de congestion : slides manquantes
+
+TCP: 2 cas de retransmissions : timeaout et acquitement dupliqué
+
+timouet = congestion severe
+ack dupliqué = pas aussi severe
+
+    
+
+
+
+
+
+
+
+
+ 

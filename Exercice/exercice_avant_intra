@@ -1,0 +1,216 @@
+Segment#1
+0015 0593 2950 145f 008a cafd 5018 2398 368a 0000 3232 3120 476f 6f64 6279 652e 0d0a
+
+0015                0593
+#port source 21     #port client 1427
+Serveur FTP           Client FTP
+
+   #sequence 32bit
+     2950 145f   = 693113951
+
+        #ACK
+    008a cafd   = 095933
+
+                        fenetre
+5018                    2398
+0101 0000 0001 1000     9112
+            UA PRSF  
+
+cheksum 368a = 13681    pointeur donn ur = 0000
+
+data = 3232 3120 476f 6f64 6279 652e 0d0a
+
+
+                **************
+
+Segment#2
+0015 0593 2950 146d 008a cafd 5011 2398 2569 0000 0000 0000 0000
+
+
+0015                0593
+#port source 21     #port client 1427
+Serveur FTP          Client FTP
+
+   #sequence 32bit
+     2950 146d   = 693113965
+
+        #ACK
+    008a cafd   = 095933
+
+                        fenetre
+5011                    2398
+0101 0000 0001 0001     9112
+            UA PRSF  
+
+cheksum 2569 = 9577    pointeur donn ur = 0000
+
+data = 0000 0000 0000
+
+                **************
+Ségment #3:
+0593 0015 008a cafd 2950 146e 5010 203d 28c4 0000 452b 6c54 2068
+
+
+0593                    0015
+#port source 1427     #port client 21
+Serveur FTP          Client FTP
+
+   #sequence 32bit
+     008a cafd   = 9095933
+
+        #ACK
+    2950 146e   = 693113966
+
+                        fenetre
+5010                    203d
+0101 0000 0001 0000     8253
+            UA PRSF  
+
+cheksum 28c4 = 10436    pointeur donn ur = 0000
+
+data = 452b 6c54 2068
+
+                 **************
+
+Ségment #4:
+0593 0015 008a cafd 2950 146e 5011 203d 28c3 0000 fc29 5818 5707
+
+
+0593                    0015
+#port source 1427     #port client 21
+Serveur FTP            Client FTP
+
+   #sequence 32bit
+     008a cafd   = 9095933
+
+        #ACK
+    2950 146e   = 693113966
+
+                        fenetre
+5011                    203d
+0101 0000 0001 0001     8253
+            UA PRSF  
+
+cheksum 28c3 = 10435    pointeur donn ur = 0000
+
+data = fc29 5818 5707
+
+             *******************
+
+Serveur FTP                                             Client FTP
+   A =21                                                    B=1427
+ Ack, push , #seq=693113951, #ack =095933    >>>       14 octets de donnees 
+ Ack, FIN , #seq=693113965, #ack =095933    >>>        
+ Ack       , #seq=693113965, #ack =095933    <<<       
+ Ack  FIN     , #seq=693113965, #ack =095933  <<<       
+
+            **************
+
+           Exercice 2
+On considère une connexion TCP entre deux applications distantes A et B. A doit envoyer
+à B deux segments de 100 octets de données chacun et B doit envoyer à A un segment de
+300 octets de données. Représenter le chronogramme d’un échange entre A et B, sachant
+que A est à l’origine de l’établissement et que la référence initiale de A est égale à 100 et
+celle de B à 600. 
+
+--la reference initiale = numero de sequence initial
+voir slide tcp 3way handshake
+
+
+Que se passe-t-il si le premier segment de données de A se perd ? le dernier numero d acquitement sera 101
+
+
+ACK,  #seq=101, #ack =901                                  >>>        
+ACK, #seq=901, #ack =301 (car ce sont des ack cumulatif)   <<< 
+
+            Exercice 3
+Tracez la courbe illustrant les variations de la taille de la fenêtre de congestion de TCP
+sous les hypothèses suivantes. La taille maximum de segment est de 1024 octets et,
+initialement, le seuil de congestion est fixé à 64 Ko. Après 10 RTT, le temporisateur de
+retransmission expire, puis de nouveau après 46 RTT.
+
+
+            Exercice livre 9.291
+
+3 ack dupliqué le seuil devient la moitie de la fentre, mais le prochain rtt est le seuil + 3
+À quelle transmission, le segment 70 est Envoyé? ROUND 7
+Supposons 3Acks dupliqués à la transmission 26, donner cwnd et ssthresh 7?  cwnd = 4 ssthres = 7
+
+ROUND       #SEGMENT
+1               1
+2               2-3
+3               4-7
+4               8-15
+5               16-31
+6               32-63
+7               64-96
+8               97-130
+
+
+Timer expire
+    Window = 1MsS
+    THRESHOLD = wINDOW / 2
+
+3ACK
+    Window = window/2 +3
+    THRESHOLD = wINDOW / 2
+
+
+Supposons Tahoe
+ cwnd et ssthresh à 19?
+ timeout à 22, combien de segments envoyés entre
+17 et 22? 17 = 1; 18 = 2; 19 = 4; 20 = 8 21 = 16 22 = 21 car c est le seuil
+
+
+                    Exercice 2
+
+A----------Rt1---------------Rt2---------B
+L/R1 + L/R2 +  L/R3 + d1/s1 + d2/s2 + d3/s3 + 2dproc 
+
+
+                    Exercice 2b
+6 + 6 + 6 + 16 + 4 + 2*3 = 64 ms
+
+
+
+
+                    Exercice 2c
+
+il n y a pas trois delai de transmision
+
+L/R + d1/s1 + d2/s2 + d3/s3
+
+voir slide debit
+
+            Exercice 6
+d i = longueur du lien i
+s i = vitesse de propagation sur le lien i
+R i = débit sur le lien i
+d proc = délai de traitement dans chaque routeur
+
+ La distance entre chaque hôte et le routeur = 1500 m.
+ La vitesse de propagation = 360.000km/s (vitesse de la lumière).
+ La taille des messages = 1500 octets.
+ Le débit du lien entre chaque hôte et le routeur = 1Mb/s.
+ Le délai de traitement d’un message dans le routeur=10ms.
+
+
+
+A----------Rt---------B
+L/R1 + L/R2 + d1/s1 + d2/s2  + 2dproc 
+
+
+2 X (1500*8/10⁸ + 1500/360X10⁸) +0.01
+
+2* ( 0.012 + 0.00004) +0.01
+0.034008
+
+
+
+
+
+
+
+
+
+
